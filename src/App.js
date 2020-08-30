@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { Jutsu } from 'react-jutsu';
+
+const App = () => {
+    const roomOptions = {
+        "Landing Page": "STM",
+        "Entertainment": "STM/Entertainment",
+        "Spiritual": "STM/Spiritual",
+        "Food": "STM/Food",
+    }
+    const [room, setRoom] = useState(null);
+    const userInfo = {'displayName': 'MyName'}
+
+    const joinMeeting = (roomName) => {
+        setRoom(null);
+        setRoom(<Jutsu roomName={roomName} userInfo={userInfo} />);
+    }
+
+    const roomElems = []
+    Object.entries(roomOptions).forEach(
+        ([key, value]) => {
+            roomElems.push(
+                <StartButton key={value}
+                    roomName={value} 
+                    roomAlias={key} 
+                    callBack={joinMeeting}/>
+            )
+        }
+    )
+    return (
+        <div>
+            <div>
+                {roomElems}
+            </div>
+            {room}
+        </div>
+    )
 }
 
-export default App;
+const StartButton = ({ roomName, roomAlias, callBack }) => {
+
+    const handleClick = () => {
+        callBack(roomName)
+    }
+
+    return (
+        <button onClick={handleClick}>{roomAlias}</button>
+    )
+}
+export default App
