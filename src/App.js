@@ -53,14 +53,16 @@ const App = () => {
 
     return (
         <div>
-            <div>
-                {roomElems}
-            </div>
-            <div className="NameBox">
-                <label>Your Name: </label>
-                <input value={displayName} onChange={(e) => {setDisplayName(e.target.value) }}/>
-                <br />
-	        <label className="Disclaimer">(Ignore the prompt after entering to change this)</label>
+            <div className="App-header">
+                <div style={{textAlign: "center", marginBottom: "25px"}}>
+                    {roomElems}
+                </div>
+                <div>
+                    <label>Your Name: </label>
+                    <input value={displayName} onChange={(e) => {setDisplayName(e.target.value) }}/>
+                    <br />
+                    <label style={{fontSize: "12px"}}>(Ignore the prompt after entering to change this)</label>
+                </div>
             </div>
             {loading && <ProgressComponent/>}
             {showRoom && room}
