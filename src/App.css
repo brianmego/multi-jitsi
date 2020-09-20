@@ -13,6 +13,27 @@
   }
 }
 
+.StartButton {
+  background-color: #0376da;
+  border: #0376da;
+  border-radius: 3px;
+  padding: 7px 16px;
+  margin: 5px 10px;
+  width: 150px;
+  display: inline-block;
+  font-family: Arial,sans-serif;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: white;
+}
+
+.NameBox {
+  text-align: center;
+  font-family: Arial,sans-serif;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

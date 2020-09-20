@@ -3,6 +3,8 @@ import ProgressComponent from '@material-ui/core/CircularProgress';
 
 import { Jutsu } from 'react-jutsu';
 
+import './App.css';
+
 const App = () => {
     const roomOptions = {
         "Landing Page": "STM",
@@ -54,9 +56,12 @@ const App = () => {
             <div>
                 {roomElems}
             </div>
-            <label>Your Name (Ignore the prompt after entering to change this): </label>
-            <input value={displayName} onChange={(e) => {setDisplayName(e.target.value) }}/>
-            <br />
+            <div className="NameBox">
+                <label>Your Name: </label>
+                <input value={displayName} onChange={(e) => {setDisplayName(e.target.value) }}/>
+                <br />
+	        <label className="Disclaimer">(Ignore the prompt after entering to change this)</label>
+            </div>
             {loading && <ProgressComponent/>}
             {showRoom && room}
         </div>
@@ -70,7 +75,7 @@ const StartButton = ({ roomName, roomAlias, callBack }) => {
     }
 
     return (
-        <button onClick={handleClick}>{roomAlias}</button>
+        <button className="StartButton" onClick={handleClick}>{roomAlias}</button>
     )
 }
 export default App
