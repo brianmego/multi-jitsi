@@ -27,10 +27,10 @@ const App = () => {
         delay(1000).then( () => {
             setRoom(
                 <Jutsu subject={roomName}
-                    roomName={roomName} 
+                    roomName={roomName}
                     displayName={displayName}
-                    onMeetingEnd={() => console.log('Meeting has ended')} 
-                    containerStyles={{ width: window.innerWidth, height: window.innerHeight - 100 }}
+                    onMeetingEnd={() => console.log('Meeting has ended')}
+                    containerStyles={{ width: window.innerWidth, height: window.innerHeight - 165 }}
                 />
             );
             setLoading(false);
@@ -50,12 +50,24 @@ const App = () => {
             )
         }
     )
+    const roomElems2 = []
+    for (const x of Array(5).keys()) {
+        roomElems2.push(
+            <StartButton key={x}
+                roomName={'STM/' + x}
+                roomAlias={x}
+                callBack={joinMeeting}/>
+        )
+    }
 
     return (
         <div>
             <div className="App-header">
-                <div style={{textAlign: "center", marginBottom: "25px"}}>
+                <div style={{textAlign: "center"}}>
                     {roomElems}
+                </div>
+                <div style={{textAlign: "center", marginBottom: "25px"}}>
+                    {roomElems2}
                 </div>
                 <div>
                     <label>Your Name: </label>
