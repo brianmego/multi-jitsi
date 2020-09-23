@@ -7,11 +7,12 @@ import './App.css';
 
 const App = () => {
     const roomOptions = {
-        "Landing Page": "STM",
+        "Starting Room": "STM",
         "Entertainment": "STM/Entertainment",
         "Spiritual": "STM/Spiritual",
         "Food": "STM/Food",
     }
+    const [initialRoomEntered, setInitialRoomEntered] = useState(false);
     const [showRoom, setShowRoom] = useState(false);
     const [loading, setLoading] = useState(false);
     const [room, setRoom] = useState(null);
@@ -24,13 +25,15 @@ const App = () => {
     const joinMeeting = (roomName) => {
         setShowRoom(false);
         setLoading(true);
+        setInitialRoomEntered(true);
         delay(1000).then( () => {
+            const height = window.innerHeight - document.getElementById('header').clientHeight;
             setRoom(
                 <Jutsu subject={roomName}
                     roomName={roomName}
                     displayName={displayName}
                     onMeetingEnd={() => console.log('Meeting has ended')}
-                    containerStyles={{ width: window.innerWidth, height: window.innerHeight - 165 }}
+                    containerStyles={{ width: window.innerWidth, height: height }}
                 />
             );
             setLoading(false);
@@ -62,22 +65,33 @@ const App = () => {
 
     return (
         <div>
-            <div className="App-header">
-                <div style={{textAlign: "center"}}>
-                    {roomElems}
-                </div>
-                <div style={{textAlign: "center", marginBottom: "25px"}}>
-                    {roomElems2}
-                </div>
-                <div>
-                    <label>Your Name: </label>
-                    <input value={displayName} onChange={(e) => {setDisplayName(e.target.value) }}/>
-                    <br />
-                    <label style={{fontSize: "12px"}}>(Ignore the prompt after entering to change this)</label>
-                </div>
+            <div id="header" className="App-header">
+                {
+                    !initialRoomEntered ? (
+                        <div>
+                            <div>
+                                <label>Your Name: </label>
+                                <input value={displayName} onChange={(e) => {setDisplayName(e.target.value) }}/>
+                            </div>
+                            <StartButton roomName='STM' roomAlias='Start Meeting' callBack={joinMeeting}/>
+                        </div>
+                    )
+                    :  (
+                        <div>
+                            <div style={{textAlign: "center"}}>
+                                {roomElems}
+                            </div>
+                            <div style={{textAlign: "center", marginBottom: "25px"}}>
+                                {roomElems2}
+                            </div>
+                        </div>
+                    )
+                }
             </div>
             {loading && <ProgressComponent/>}
-            {showRoom && room}
+            <div id="videoWindow">
+                {showRoom && room}
+            </div>
         </div>
     )
 }
