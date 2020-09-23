@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProgressComponent from '@material-ui/core/CircularProgress';
 
-import { Jutsu } from 'react-jutsu';
+import { useJitsi } from 'react-jutsu';
 
 import './App.css';
 
@@ -27,13 +27,10 @@ const App = () => {
         setLoading(true);
         setInitialRoomEntered(true);
         delay(1000).then( () => {
-            const height = window.innerHeight - document.getElementById('header').clientHeight;
             setRoom(
-                <Jutsu subject={roomName}
+                <MyJutsu
                     roomName={roomName}
                     displayName={displayName}
-                    onMeetingEnd={() => console.log('Meeting has ended')}
-                    containerStyles={{ width: window.innerWidth, height: height }}
                 />
             );
             setLoading(false);
@@ -89,7 +86,7 @@ const App = () => {
                 }
             </div>
             {loading && <ProgressComponent/>}
-            <div id="videoWindow">
+            <div>
                 {showRoom && room}
             </div>
         </div>
@@ -105,5 +102,29 @@ const StartButton = ({ roomName, roomAlias, callBack }) => {
     return (
         <button className="StartButton" onClick={handleClick}>{roomAlias}</button>
     )
+}
+
+const MyJutsu = ({roomName, displayName }) => {
+    const parentNode = 'jitsi-container';
+    const height = window.innerHeight - document.getElementById('header').clientHeight;
+    const jitsi = useJitsi({
+        roomName,
+        parentNode,
+        height: height,
+        configOverwrite: {prejoinPageEnabled: false}
+    })
+
+    useEffect(() => {
+        if (jitsi) {
+            jitsi.addEventListener('videoConferenceJoined', () => {
+                jitsi.executeCommand('displayName', displayName)
+                jitsi.executeCommand('subject', roomName)
+            })
+        }
+        return () => jitsi && jitsi.dispose()
+    }, [jitsi, displayName, roomName])
+
+    return <div id={parentNode} />
+
 }
 export default App
