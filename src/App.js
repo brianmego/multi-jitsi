@@ -6,7 +6,7 @@ import { useJitsi } from 'react-jutsu';
 import './App.css';
 
 const App = () => {
-    const path = document.location.pathname.substring(1);
+    const path = document.location.pathname.substring(1).replace('jitsi/', '');
     const [roomPrefix, setRoomPrefix] = useState(path ? path : 'STM');
     const [initialRoomEntered, setInitialRoomEntered] = useState(false);
     const [showRoom, setShowRoom] = useState(false);
