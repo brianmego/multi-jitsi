@@ -6,17 +6,13 @@ import { useJitsi } from 'react-jutsu';
 import './App.css';
 
 const App = () => {
-    const roomOptions = {
-        "Starting Room": "STM",
-        "Entertainment": "STM/Entertainment",
-        "Spiritual": "STM/Spiritual",
-        "Food": "STM/Food",
-    }
+    const path = document.location.pathname.substring(1);
+    const [roomPrefix, setRoomPrefix] = useState(path ? path : 'STM');
     const [initialRoomEntered, setInitialRoomEntered] = useState(false);
     const [showRoom, setShowRoom] = useState(false);
     const [loading, setLoading] = useState(false);
     const [room, setRoom] = useState(null);
-    const [displayName, setDisplayName] = useState();
+    const [displayName, setDisplayName] = useState('');
 
     function delay(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
@@ -39,22 +35,18 @@ const App = () => {
         )
     }
 
-    const roomElems = []
-    Object.entries(roomOptions).forEach(
-        ([key, value]) => {
-            roomElems.push(
-                <StartButton key={value}
-                    roomName={value}
-                    roomAlias={key}
-                    callBack={joinMeeting}/>
-            )
-        }
-    )
+    const roomElems = [
+        <StartButton
+            key={1}
+            roomName={roomPrefix}
+            roomAlias='Starting Room'
+            callBack={joinMeeting}/>
+    ]
     const roomElems2 = []
     for (const x of Array(5).keys()) {
         roomElems2.push(
             <StartButton key={x}
-                roomName={'STM/' + x}
+                roomName={`${roomPrefix}/` + x}
                 roomAlias={x}
                 callBack={joinMeeting}/>
         )
@@ -67,10 +59,14 @@ const App = () => {
                     !initialRoomEntered ? (
                         <div>
                             <div>
+                                <label>Group: </label>
+                                <input value={roomPrefix} onChange={e => {setRoomPrefix(e.target.value)}} />
+                            </div>
+                            <div>
                                 <label>Your Name: </label>
                                 <input value={displayName} onChange={(e) => {setDisplayName(e.target.value) }}/>
                             </div>
-                            <StartButton roomName='STM' roomAlias='Start Meeting' callBack={joinMeeting}/>
+                            <StartButton roomName={roomPrefix} roomAlias='Start Meeting' callBack={joinMeeting}/>
                         </div>
                     )
                     :  (
