@@ -52,7 +52,7 @@ const Main = () => {
     const roomElems = [
         <StartButton
             key={1}
-            roomName={roomPrefix}
+            roomName={`${roomPrefix}/default`}
             roomAlias='Starting Room'
             callBack={joinMeeting}/>
     ]
@@ -60,8 +60,8 @@ const Main = () => {
     for (const x of Array(5).keys()) {
         roomElems2.push(
             <StartButton key={x}
-                roomName={`${roomPrefix}/` + x}
-                roomAlias={x}
+                roomName={`${roomPrefix}/` + (x + 1)}
+                roomAlias={x + 1}
                 callBack={joinMeeting}/>
         )
     }
@@ -80,7 +80,7 @@ const Main = () => {
                                 <label>Your Name: </label>
                                 <input value={displayName} onChange={(e) => {setDisplayName(e.target.value) }}/>
                             </div>
-                            <StartButton roomName={roomPrefix} roomAlias='Start Meeting' callBack={joinMeeting}/>
+                            <StartButton roomName={`${roomPrefix}/default`} roomAlias='Start Meeting' callBack={joinMeeting}/>
                         </div>
                     )
                     :  (
