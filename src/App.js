@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import {useLocation, BrowserRouter as Router} from 'react-router-dom';
 import ProgressComponent from '@material-ui/core/CircularProgress';
 
 import { useJitsi } from 'react-jutsu';
@@ -6,7 +7,16 @@ import { useJitsi } from 'react-jutsu';
 import './App.css';
 
 const App = () => {
-    const path = document.location.pathname.substring(1).replace('jitsi/', '');
+    return (
+        <Router>
+            <Main />
+        </Router>
+    )
+}
+
+const Main = () => {
+    const params = new URLSearchParams(useLocation().search);
+    const path = params.get('group');
     const [roomPrefix, setRoomPrefix] = useState(path ? path : 'STM');
     const [initialRoomEntered, setInitialRoomEntered] = useState(false);
     const [showRoom, setShowRoom] = useState(false);
@@ -14,6 +24,10 @@ const App = () => {
     const [room, setRoom] = useState(null);
     const [displayName, setDisplayName] = useState('');
 
+    const updatePrefix = (prefix) => {
+        setRoomPrefix(prefix);
+        window.history.pushState("", "", `?group=${prefix}`);
+    }
     function delay(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -60,7 +74,7 @@ const App = () => {
                         <div>
                             <div>
                                 <label>Group: </label>
-                                <input value={roomPrefix} onChange={e => {setRoomPrefix(e.target.value)}} />
+                                <input value={roomPrefix} onChange={e => {updatePrefix(e.target.value)}} />
                             </div>
                             <div>
                                 <label>Your Name: </label>
