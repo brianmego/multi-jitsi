@@ -53,15 +53,15 @@ const Main = () => {
         <StartButton
             key={1}
             roomName={`${roomPrefix}/default`}
-            roomAlias='Starting Room'
+            roomAlias='Starting Room (1)'
             callBack={joinMeeting}/>
     ]
     const roomElems2 = []
-    for (const x of Array(5).keys()) {
+    for (const x of Array(4).keys()) {
         roomElems2.push(
             <StartButton key={x}
-                roomName={`${roomPrefix}/` + (x + 1)}
-                roomAlias={x + 1}
+                roomName={`${roomPrefix}/` + (x + 2)}
+                roomAlias={x + 2}
                 callBack={joinMeeting}/>
         )
     }
