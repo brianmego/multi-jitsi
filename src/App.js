@@ -21,7 +21,7 @@ const Main = () => {
         <div>
             <div id="header" className="App-header">
                 <div style={{textAlign: "center"}}>
-                    <p>After clicking the Start Meeting button, join as moderator</p>
+                    <p>After clicking the Start Meeting button, click "Join as Moderator" button.</p>
                     <StartButton roomAlias='Start Meeting' callBack={joinMeeting}/>
                 </div>
             </div>
