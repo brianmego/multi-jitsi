@@ -8,6 +8,7 @@ echo "Remote commit: $REMOTE_HASH"
 if [[ "$LOCAL_HASH" != "$REMOTE_HASH" ]]; then
     git pull
     cd ~/multi-jitsi
+    source ~/.nvm/nvm.sh
     nvm use
     yarn build
 fi
