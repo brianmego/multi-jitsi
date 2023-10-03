@@ -14,7 +14,7 @@ const App = () => {
 const Main = () => {
 
     const joinMeeting = () => {
-        window.open("https://moderated.jitsi.net/dcfd53b3fb124e0098a6f56ef8465ff431b550b25e5a4db6bbf715dea7a49561");
+        window.open("https://meet.jit.si/moderated/0de4bf8d6f2f1f8e216ffe94150197aa8cf9eeddbe799f173083ded7786d9f94");
     }
 
     return (
